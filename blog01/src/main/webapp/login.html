@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script>
+        function mysub(type) {
+            var username = jQuery("#username");
+            var password = jQuery("#password");
+            if (type == 2) {
+                // todo:留给你们来实现
+                if(confirm("确认清空?")){
+                    username.val("");
+                    password.val("");
+                }
+                return false;
+            }
+            // 1.非空效验
+            if (username.val().trim() == "") {
+                alert("请先输入用户名！");
+                username.focus();
+                return false;
+            }
+            if (password.val().trim() == "") {
+                alert("请先输入密码！");
+                password.focus();
+                return false;
+            }
+            // 2.请求后端，实现登录验证
+            jQuery.getJSON("login", {
+                "username": username.val(),
+                "password": password.val()
+            }, function (data) {
+                if (data != null && data.succ == 1) {
+                    // 登录成功
+                    alert("登录成功");
+                    location.href = "myartlist.html";
+                } else {
+                    // 登录失败
+                    alert("登录失败" + data.msg);
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+<div style="text-align: center;margin-top: 70px;">
+    <h1>登录</h1>
+    &nbsp;&nbsp;用户名：<input id="username" name="username" type="text"><p></p>
+    &nbsp;&nbsp;&nbsp;&nbsp;密&nbsp;&nbsp;码：<input id="password" name="password" type="password"><p></p>
+    <input onclick="mysub(1)" type="button" value=" 提 交 ">
+    <input onclick="mysub(2)" type="button" value=" 清 空 ">
+</div>>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章列表</title>
+    <script src="jquery-1.9.1.min.js"></script>
+    <script>
+        jQuery(function () {
+
+            //感觉很然
+            //1、后台查询我的文章列表
+            jQuery.getJSON("myartlist",{},function (data) {
+            //2、将table信息进行替换（替换成后台数据库里面的数据）
+                if(data != null && data.succ==1){
+                   //查询成功！跳转到文章列表，动态拼接到table；
+                    var html ="";
+                        for (var i = 0; i < data.list.length; i++) {
+                        var article = data.list[i];
+                        html += " <tr>\n" +
+                            "            <td>\n" +
+                            article.id + "                \n" +
+                            "            </td>\n" +
+                            "            <td>\n" +
+                            article.title + "                \n" +
+                            "            </td>\n" +
+                            "            <td>\n" +
+                            article.createtime + "                \n" +
+                            "            </td>\n" +
+                            "            <td>\n" +
+                            article.rcount + "                \n" +
+                            "            </td>\n" +
+                            "            <td>\n" +
+                            "                修改 删除\n" +
+                            "            </td>\n" +
+                            "        </tr>";
+                    }
+                    jQuery("#tab1").append(html);
+                } else {
+                    alert("操作失败：" + data.msg);
+                    }
+                });
+
+
+            });
+        </script>
+</head>
+<body>
+<div style="margin-top: 60px;">
+    <table id="tab1" style="width: 80%;margin-left: 100px;" border="1">
+        <tr>
+            <td>
+                编号
+            </td>
+            <td>
+                标题
+            </td>
+            <td>
+                发布时间
+            </td>
+            <td>
+                阅读量
+            </td>
+            <td>
+                操作
+            </td>
+        </tr>
+    </table>
+</div>
+
+</body>
+</html>
